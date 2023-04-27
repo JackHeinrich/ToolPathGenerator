@@ -2,15 +2,15 @@ import os, yaml
 
 from langchain.agents.agent_toolkits.openapi.spec import reduce_openapi_spec
 
-with open("D:\WorkFiles\LangChainRepo\OpenAPISpecifications\klarna_openapi.yaml", encoding="utf8") as f:
+with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\openai_openapi.yaml", encoding="utf8") as f:
     raw_openai_api_spec = yaml.load(f, Loader=yaml.Loader)
 openai_api_spec = reduce_openapi_spec(raw_openai_api_spec)
     
-with open("D:\WorkFiles\LangChainRepo\OpenAPISpecifications\klarna_openapi.yaml", encoding="utf8") as f:
+with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\klarna_openapi.yaml", encoding="utf8") as f:
     raw_klarna_api_spec = yaml.load(f, Loader=yaml.Loader)
 klarna_api_spec = reduce_openapi_spec(raw_klarna_api_spec)
 
-with open("D:\WorkFiles\LangChainRepo\OpenAPISpecifications\spotify_openapi.yaml",encoding="utf8") as f:
+with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\spotify_openapi.yaml",encoding="utf8") as f:
     raw_spotify_api_spec = yaml.load(f, Loader=yaml.Loader)
 spotify_api_spec = reduce_openapi_spec(raw_spotify_api_spec)
 
@@ -46,8 +46,11 @@ def count_tokens(s): return len(enc.encode(s))
 
 count_tokens(yaml.dump(raw_spotify_api_spec))
 
+from langchain.chat_models import ChatOpenAI
+
 from langchain.llms.openai import OpenAI
 from langchain.agents.agent_toolkits.openapi import planner
+#can replace "text-davinci-003" with "gpt-3.5-turbo" for better language model.
 llm = OpenAI(model_name="text-davinci-003", temperature=0.0)
 
 spotify_agent = planner.create_openapi_agent(spotify_api_spec, requests_wrapper, llm)
