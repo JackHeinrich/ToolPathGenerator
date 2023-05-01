@@ -77,6 +77,19 @@ llm = OpenAI(model_name="text-davinci-003", temperature=0.0)
 #PINECONE INTEGRATION
 #######################################################################################
 
+# from PyPDF2 import PdfReader
+# from langchain.embeddings.openai import OpenAIEmbeddings
+# from langchain.text_splitter import CharacterTextSplitter
+# from langchain.vectorstores import ElasticVectorSearch, Pinecone, Weaviate, FAISS
+
+# pdf_file = PdfReader("C:\Users\JackH\Downloads\Lit Essay 4_26_23.pdf")
+
+# raw_text = ""
+# for i, page in enumerate(pdf_file.pages):
+#     text = page.extract_text()
+#     if text:
+#         raw_text += text
+
 #######################################################################################
 #USINGAGENT
 #######################################################################################
