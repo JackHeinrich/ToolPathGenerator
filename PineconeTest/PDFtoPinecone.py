@@ -14,7 +14,7 @@ def break_down_pdf(filepath: str):
     #for online pdf: loader = OnlinePDFLoader("LINK TO PDF")
     data = loader.load()
     #FOR BREAKING DOWN PDF
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 750, chunk_overlap = 0)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 375, chunk_overlap = 0)
     texts = text_splitter.split_documents(data)
     return(texts)
 
@@ -65,7 +65,7 @@ else:
 
 from langchain.llms import OpenAI
 
-from langchain.chains.question_answering import load_qa_chain
+# from langchain.chains.question_answering import load_qa_chain
 
 #OPTION TO CHOOSE LANGUAGE MODEL
 llm_model = input("What LLM Model? DAVINCI/GPT: ")
@@ -74,8 +74,6 @@ if llm_model == "GPT":
     llm_model_name = "gpt-3.5-turbo"
 else:
     llm_model_name = "text-davinci-003"
-
-llm = OpenAI(model_name=llm_model_name, temperature=0.9, openai_api_key=OPENAI_API_KEY)
 
 # chain = load_qa_chain(llm,chain_type = "stuff", verbose = True)
 
@@ -96,16 +94,29 @@ class DocumentSearcher():
             final_text += doc.page_content
         return(final_text)
 
+llm=OpenAI(model_name=llm_model_name,temperature=0)
+
 tools = load_tools([],llm=llm)
 
-DocumentSearchingTool = Tool("DocumentSearchingTool",DocumentSearcher.get_similar_docs,"Useful for finding information about a question from the document provided. The input should be a question asking for the information you want.")
+DocumentSearchingTool = Tool("DocumentSearchingTool",DocumentSearcher.get_similar_docs,"Useful for accessing information, evidence, and quotes, from documents, articles, etc. Input must be in the form of a question asking for the information you want.")
 
 tools.append(DocumentSearchingTool)
 
-agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+from langchain.memory import ConversationBufferMemory
+from langchain import OpenAI
 
-query = input("What is your query? ")
+memory = ConversationBufferMemory(memory_key="chat_history")
 
-agent.run(query)
+agent_chain = initialize_agent(tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
+
+agent = initialize_agent(tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True)
+
+user_input = input('Input: ')
+
+response = agent_chain.run(input=user_input)
+
+while user_input != 'STOP':
+    user_input = input('Input: ')
+    response = agent_chain.run(input=user_input)
 
 # chain.run(input_documents = docs, question = query)

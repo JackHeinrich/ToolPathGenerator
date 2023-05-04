@@ -5,15 +5,15 @@ from langchain.agents.agent_toolkits.openapi.spec import reduce_openapi_spec
 #######################################################################################
 #REDUCING API SPECS FOR LANGUAGE MODEL
 #######################################################################################
-with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\openai_openapi.yaml", encoding="utf8") as f:
+with open(".\OpenAPISpecifications\openai_openapi.yaml", encoding="utf8") as f:
     raw_openai_api_spec = yaml.load(f, Loader=yaml.Loader)
 openai_api_spec = reduce_openapi_spec(raw_openai_api_spec)
     
-with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\klarna_openapi.yaml", encoding="utf8") as f:
+with open(".\OpenAPISpecifications\klarna_openapi.yaml", encoding="utf8") as f:
     raw_klarna_api_spec = yaml.load(f, Loader=yaml.Loader)
 klarna_api_spec = reduce_openapi_spec(raw_klarna_api_spec)
 
-with open("D:\WorkFiles\LangChainRepo\LangChainProject\OpenAPISpecifications\spotify_openapi.yaml",encoding="utf8") as f:
+with open(".\OpenAPISpecifications\spotify_openapi.yaml",encoding="utf8") as f:
     raw_spotify_api_spec = yaml.load(f, Loader=yaml.Loader)
 spotify_api_spec = reduce_openapi_spec(raw_spotify_api_spec)
 
