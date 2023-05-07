@@ -49,19 +49,19 @@ index_name = "testindex"
 index = pinecone.Index(index_name)
 
 #OPTION TO CLEAR INDEX - MOSTLY FOR TESTING
-clear_index = input("Clear index? Y/N: ")
+# clear_index = input("Clear index? Y/N: ")
 
-if clear_index == "Y":
-    index.delete(delete_all=True)
+# if clear_index == "Y":
+#     index.delete(delete_all=True)
 
-new_doc = input("New doc? Y/N: ")
+# new_doc = input("New doc? Y/N: ")
 
-if new_doc == "N":
-    docsearch = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
-else:
-    file_path = filedialog.askopenfilename()
-    texts = break_down_pdf(file_path)
-    docsearch = Pinecone.from_texts([t.page_content for t in texts], embeddings, index_name=index_name)
+# if new_doc == "N":
+#     docsearch = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
+# else:
+#     file_path = filedialog.askopenfilename()
+#     texts = break_down_pdf(file_path)
+#     docsearch = Pinecone.from_texts([t.page_content for t in texts], embeddings, index_name=index_name)
 
 from langchain.llms import OpenAI
 
@@ -117,6 +117,6 @@ response = agent_chain.run(input=user_input)
 
 while user_input != 'STOP':
     user_input = input('Input: ')
-    response = agent_chain.run(input=user_input)
+    response =agent_chain.run(input=user_input)
 
 # chain.run(input_documents = docs, question = query)
